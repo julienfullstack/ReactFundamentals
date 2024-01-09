@@ -7,9 +7,11 @@ class TicketControl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      formVisibleOnPage: false
+      formVisibleOnPage: false,
+      mainTicketList: [],
+      selectedTicket: null 
     };
-    this.handleClick = this.handleClick.bind(this); //new code here
+    this.handleClick = this.handleClick.bind(this); 
   }
 
   handleClick() {
@@ -18,21 +20,25 @@ class TicketControl extends React.Component {
     }));
   }
 
+  handleChangingSelectedTicket = (id) => {
+    const selectedTicket = this.state.mainTicketList.filter(ticket => ticket.id === id)[0];
+    this.setState({selectedTicket: selectedTicket});
+  }
 
   render(){
     let currentlyVisibleState = null;
-    let buttonText = null; // new code
+    let buttonText = null; 
     if (this.state.formVisibleOnPage) {
       currentlyVisibleState = <NewTicketForm />;
-      buttonText = "Return to Ticket List"; // new code
+      buttonText = "Return to Ticket List"; 
     } else {
       currentlyVisibleState = <TicketList />;
-      buttonText = "Add Ticket"; // new code
+      buttonText = "Add Ticket"; 
     }
     return (
       <React.Fragment>
         {currentlyVisibleState}
-        <button onClick={this.handleClick}>{buttonText}</button> { /* new code */ }
+        <button onClick={this.handleClick}>{buttonText}</button> {  }
       </React.Fragment>
     );
   }
