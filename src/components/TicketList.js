@@ -1,44 +1,29 @@
 import React from "react";
-import Ticket from "./Ticket";
+import PropTypes from "prop-types";
+import TicketDetail from './TicketDetail';
+import Ticket from './Ticket';
 
-const mainTicketList = [
-  {
-    names: 'Thato and Haley',
-    location: '3A',
-    issue: 'Firebase won\'t save record. Halp.'
-  },
-  {
-    names: 'Sleater and Kinney',
-    location: '4B',
-    issue: 'Prop types are throwing an error.'
-  },
-  {
-    names: 'Imani & Jacob',
-    location: '9F',
-    issue: 'Child component isn\'t rendering.'
-  }
-];
+function TicketList(props){
 
-
-function Ticket(props){
   return (
     <React.Fragment>
-      <div onClick = {() => props.whenTicketClicked(props.id)}>
-        { /}
-        <h3>{props.location} - {props.names}</h3>
-        <p><em>{props.issue}</em></p>
-        <hr/>
-      </div>
+      <hr/>
+      {props.ticketList.map((ticket) =>
+        <Ticket
+          whenTicketClicked = { props.onTicketSelection }
+          names={ticket.names}
+          location={ticket.location}
+          issue={ticket.issue}
+          id={ticket.id}
+          key={ticket.id}/>
+      )}
     </React.Fragment>
   );
 }
 
-Ticket.propTypes = {
-  names: PropTypes.string,
-  location: PropTypes.string,
-  issue: PropTypes.string,
-  id: PropTypes.string, 
-  whenTicketClicked: PropTypes.func 
+TicketList.propTypes = {
+  ticketList: PropTypes.array,
+  onTicketSelection: PropTypes.func
 };
 
 export default TicketList;
