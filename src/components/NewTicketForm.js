@@ -1,9 +1,12 @@
 import React from "react";
+import ReusableForm from "./ReusableForm";
 
 function NewTicketForm(props){
   return (
     <React.Fragment>
-      <h3>This is a form.</h3>
+      <ReusableForm 
+        formSubmissionHandler={handleNewTicketFormSubmission}
+        buttonText="Help!" />
     </React.Fragment>
   );
 }
