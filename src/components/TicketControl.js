@@ -2,6 +2,7 @@ import React from 'react';
 import NewTicketForm from './NewTicketForm';
 import TicketList from './TicketList';
 import TicketDetail from './TicketDetail';
+import EditTicketForm from './EditTicketForm';
 
 
 class TicketControl extends React.Component {
@@ -9,12 +10,25 @@ class TicketControl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      formVisibleOnPage: false,
-      mainTicketList: [],
-      selectedTicket: null,
-      editing: false 
+      formVisibleOnPage: false
     };
-    this.handleClick = this.handleClick.bind(this); 
+  }
+
+  render(){
+    let currentlyVisibleState = null;
+    let addTicketButton = null; 
+    if (this.state.formVisibleOnPage) {
+      currentlyVisibleState = <NewTicketForm />
+    } else {
+      currentlyVisibleState = <TicketList />
+      addTicketButton = <button onClick={this.handleClick}>Add ticket</button> 
+    }
+    return (
+      <React.Fragment>
+        {currentlyVisibleState}
+        {addTicketButton} {}
+      </ React.Fragment>
+    );
   }
 
   handleClick = () => {
@@ -58,6 +72,11 @@ class TicketControl extends React.Component {
     let currentlyVisibleState = null;
     let buttonText = null; 
     
+    if (this.state.editing ) {      
+      currentlyVisibleState = <EditTicketForm ticket = {this.state.selectedTicket} />
+      buttonText = "Return to Ticket List";
+    } else if (this.state.selectedTicket != null) {
+
     if (this.state.selectedTicket != null) {
       currentlyVisibleState = <TicketDetail ticket = {this.state.selectedTicket} onClickingDelete = {this.handleDeletingTicket} />
       buttonText = "Return to Ticket List";
