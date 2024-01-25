@@ -2,25 +2,36 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function CoffeeDetail(props){
-  const { coffee, onClickingDelete } = props; //new code
-  
-  return (
-    <React.Fragment>
-      <h1>Coffee Detail</h1>
-      <h3>{coffee.location} - {coffee.names}</h3>
-      <p><em>{coffee.issue}</em></p>
-      <button onClick={ props.onClickingEdit }>Update Coffee</button> { /* new code */ }
-<button onClick={()=> props.onClickingDelete(coffee.id) }>Close Coffee</button>
-      <button onClick={()=> onClickingDelete(coffee.id) }>Close Coffee</button> { /* new code */ }
-      <hr/>
-    </React.Fragment>
-  );
+    const { coffee, onClickingDelete, onClickingEdit, onClickingUpdateQty } = props;
+    
+    function handleQtyIncrease() {
+        onClickingUpdateQty(coffee, 1);
+    }
+
+    function handleQtyDecrease() {
+        onClickingUpdateQty(coffee, -1);
+    }
+
+    return (
+        <React.Fragment>
+        <h1>{coffee.name}, {coffee.origin}: {coffee.price}, remaining: {coffee.qty}</h1>
+        <h1>Coffee remaining: {(coffee.qty === 0) ? "Sold out" : coffee.qty}</h1>
+
+        <button onClick={()=> onClickingEdit(coffee.id) }>Update</button> 
+        <button onClick={()=> onClickingDelete(coffee.id) }>Delete Coffee</button>
+        <button onClick={handleQtyIncrease}>Add more</button>
+        <button onClick={handleQtyDecrease}>Sold Out</button>
+        <hr/>
+        </React.Fragment>
+    );
 }
 
 CoffeeDetail.propTypes = {
-  coffee: PropTypes.object,
-  onClickingDelete: PropTypes.func,
-  onClickingEdit: PropTypes.func
-};
+    coffee: PropTypes.object,
+    onClickingDelete: PropTypes.func,
+    onClickingEdit: PropTypes.func,
+    onClickingUpdateQty: PropTypes.func
+}
+
 
 export default CoffeeDetail;

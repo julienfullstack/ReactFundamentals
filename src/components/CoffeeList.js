@@ -7,14 +7,19 @@ function CoffeeList(props) {
     <React.Fragment>
       <hr />
       {props.coffeeList.map((coffee, index) => 
-        <Coffee names={coffee.names}
-          location={coffee.location}
-          issue={coffee.issue}
+        <Coffee 
+          name={coffee.name}
+          origin={coffee.origin}
+          roast={coffee.roast}
+          price={coffee.price}
+          qty={coffee.qty}
+          whenCoffeeClicked={props.onCoffeeSelection}
           key={index} />
       )}
     </React.Fragment>
   );
 }
+
 CoffeeList.propTypes = {
   coffeeList: PropTypes.array,
   onCoffeeSelection: PropTypes.func
