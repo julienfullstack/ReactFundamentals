@@ -14,10 +14,18 @@ class TicketControl extends React.Component {
     };
     this.handleClick = this.handleClick.bind(this); 
 
-  handleClick() {
-    this.setState(prevState => ({
-      formVisibleOnPage: !prevState.formVisibleOnPage
-    }));
+  handleClick = () => {
+    if (this.state.selectedTicket != null) {
+      this.setState({
+        formVisibleOnPage: false,
+        selectedTicket: null,
+        editing: false // new code
+      });
+    } else {
+      this.setState(prevState => ({
+        formVisibleOnPage: !prevState.formVisibleOnPage,
+      }));
+    }
   }
 
   render(){
@@ -39,18 +47,6 @@ class TicketControl extends React.Component {
   }
 }
 
-  // handleClick = () => {
-  //   if (this.state.selectedTicket != null) {
-  //     this.setState({
-  //       formVisibleOnPage: false,
-  //       selectedTicket: null
-  //     });
-  //   } else {
-  //     this.setState(prevState => ({
-  //       formVisibleOnPage: !prevState.formVisibleOnPage,
-  //     }));
-  //   }
-  // }
 
   handleChangingSelectedTicket = (id) => {
     const selectedTicket = this.state.mainTicketList.filter(ticket => ticket.id === id)[0];
@@ -70,6 +66,17 @@ class TicketControl extends React.Component {
     this.setState({editing: true});
   }
 
+  handleEditingTicketInList = (ticketToEdit) => {
+    const editedMainTicketList = this.state.mainTicketList
+      .filter(ticket => ticket.id !== this.state.selectedTicket.id)
+      .concat(ticketToEdit);
+    this.setState({
+        mainTicketList: editedMainTicketList,
+        editing: false,
+        selectedTicket: null
+      });
+  }
+
   handleAddingNewTicketToList = (newTicket) => {
     const newMainTicketList = this.state.mainTicketList.concat(newTicket);
     this.setState({mainTicketList: newMainTicketList,
@@ -81,6 +88,8 @@ class TicketControl extends React.Component {
   ticket = {this.state.selectedTicket} 
   onClickingDelete = {this.handleDeletingTicket} 
   onClickingEdit = {this.handleEditClick} />
+
+  currentlyVisibleState = <EditTicketForm ticket = {this.state.selectedTicket} onEditTicket = {this.handleEditingTicketInList} />
 
   render(){
     let currentlyVisibleState = null;
@@ -112,6 +121,7 @@ class TicketControl extends React.Component {
 
 }
 
+}
+
 export default TicketControl;
 
-}
