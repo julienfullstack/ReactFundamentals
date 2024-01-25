@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function Ticket(props){
+function Coffee(props){
   return (
     <React.Fragment>
-      <div onClick = {() => props.whenTicketClicked(props.id)}>
-        { /* We add a div with an onClick function. Don't forget to close out the div below! */}
+      <div onClick = {() => props.whenCoffeeClicked(props.id)}>
+        { }
         <h3>{props.location} - {props.names}</h3>
         <p><em>{props.issue}</em></p>
         <hr/>
@@ -14,12 +14,12 @@ function Ticket(props){
   );
 }
 
-Ticket.propTypes = {
+Coffee.propTypes = {
   names: PropTypes.string,
   location: PropTypes.string,
   issue: PropTypes.string,
-  id: PropTypes.string, // new PropType
-  whenTicketClicked: PropTypes.func // new PropType
+  id: PropTypes.string, 
+  whenCoffeeClicked: PropTypes.func 
 };
 
-export default Ticket;
+export default Coffee;

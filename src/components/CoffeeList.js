@@ -1,23 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Ticket from './Ticket';
+import Coffee from './Coffee';
 
-function TicketList(props) { 
+function CoffeeList(props) { 
   return (
     <React.Fragment>
       <hr />
-      {props.ticketList.map((ticket, index) => 
-        <Ticket names={ticket.names}
-          location={ticket.location}
-          issue={ticket.issue}
+      {props.coffeeList.map((coffee, index) => 
+        <Coffee names={coffee.names}
+          location={coffee.location}
+          issue={coffee.issue}
           key={index} />
       )}
     </React.Fragment>
   );
 }
-TicketList.propTypes = {
-  ticketList: PropTypes.array,
-  onTicketSelection: PropTypes.func
+CoffeeList.propTypes = {
+  coffeeList: PropTypes.array,
+  onCoffeeSelection: PropTypes.func
 };
 
-export default TicketList;
+export default CoffeeList;

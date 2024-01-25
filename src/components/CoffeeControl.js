@@ -1,26 +1,26 @@
 import React from 'react';
-import NewTicketForm from './NewTicketForm';
-import TicketList from './TicketList';
-import EditTicketForm from './EditTicketForm';
-import TicketDetail from './TicketDetail';
+import NewCoffeeForm from './NewCoffeeForm';
+import CoffeeList from './CoffeeList';
+import EditCoffeeForm from './EditCoffeeForm';
+import CoffeeDetail from './CoffeeDetail';
 
-class TicketControl extends React.Component {
+class CoffeeControl extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             formVisibleOnPage: false,
-            mainTicketList: [],
-            selectedTicket: null,
+            mainCoffeeList: [],
+            selectedCoffee: null,
             editing: false
         };
     }
 
     handleClick = () => {
-        if (this.state.selectedTicket != null) {
+        if (this.state.selectedCoffee != null) {
             this.setState({
                 formVisibleOnPage: false,
-                selectedTicket: null
+                selectedCoffee: null
             });
         } else {
         this.setState(prevState => ({
@@ -29,16 +29,16 @@ class TicketControl extends React.Component {
         };
     }
 
-    handleChangingSelectedTicket = (id) => {
-        const selectedTicket = this.state.mainTicketList.filter(ticket => ticket.id === id)[0];
-        this.setState({selectedTicket: selectedTicket});
+    handleChangingSelectedCoffee = (id) => {
+        const selectedCoffee = this.state.mainCoffeeList.filter(coffee => coffee.id === id)[0];
+        this.setState({selectedCoffee: selectedCoffee});
     }
 
-    handleDeletingTicket = (id) => {
-        const newMainTicketList = this.state.mainTicketList.filter(ticket => ticket.id !== id);
+    handleDeletingCoffee = (id) => {
+        const newMainCoffeeList = this.state.mainCoffeeList.filter(coffee => coffee.id !== id);
         this.setState({
-            mainTicketList: newMainTicketList,
-            selectedTicket: null
+            mainCoffeeList: newMainCoffeeList,
+            selectedCoffee: null
         });
     }
 
@@ -46,35 +46,35 @@ class TicketControl extends React.Component {
             this.setState({editing:true});
     }
 
-    handleEditingTicketInList = (ticketToEdit) => {
-        const editedMainTicketList = this.state.mainTicketList
-            .filter(ticket => ticket.id !== this.state.selectedTicket.id)
-            .concat(ticketToEdit);
+    handleEditingCoffeeInList = (coffeeToEdit) => {
+        const editedMainCoffeeList = this.state.mainCoffeeList
+            .filter(coffee => coffee.id !== this.state.selectedCoffee.id)
+            .concat(coffeeToEdit);
         this.setState({
-            mainTicketList: editedMainTicketList,
+            mainCoffeeList: editedMainCoffeeList,
             editing: false,
-            selectedTicket: null
+            selectedCoffee: null
         });
     }
 
-    handleAddingNewTicketToList = (newTicket) => {
-        const newMainTicketList = this.state.mainTicketList.concat(newTicket);
+    handleAddingNewCoffeeToList = (newCoffee) => {
+        const newMainCoffeeList = this.state.mainCoffeeList.concat(newCoffee);
         this.setState({
-            mainTicketList: newMainTicketList,
+            mainCoffeeList: newMainCoffeeList,
             formVisibleOnPage: false
         });
     }
 
-    handleUpdateQty = (ticketToUpdate, delta) => {
-        const updatedQty = ticketToUpdate.qty + delta;
+    handleUpdateQty = (coffeeToUpdate, delta) => {
+        const updatedQty = coffeeToUpdate.qty + delta;
         if (updatedQty >= 0) {
-            const updatedTicket = { ...ticketToUpdate, qty: updatedQty };
-            const newMainTicketList = this.state.mainTicketList
-                .filter(ticket => ticket.id !== ticketToUpdate.id)
-                .concat(updatedTicket);
+            const updatedCoffee = { ...coffeeToUpdate, qty: updatedQty };
+            const newMainCoffeeList = this.state.mainCoffeeList
+                .filter(coffee => coffee.id !== coffeeToUpdate.id)
+                .concat(updatedCoffee);
             this.setState({
-                mainTicketList: newMainTicketList,
-                selectedTicket: updatedTicket
+                mainCoffeeList: newMainCoffeeList,
+                selectedCoffee: updatedCoffee
             });
         }
     }
@@ -84,26 +84,26 @@ class TicketControl extends React.Component {
         let buttonText = null;
 
         if (this.state.editing) {
-            currentlyVisibleState = <EditTicketForm 
-                            ticket = {this.state.selectedTicket}
-                            onEditTicket = {this.handleEditingTicketInList} />;
-            buttonText = "Return to Ticket List"
-        } else if (this.state.selectedTicket != null) {
-            currentlyVisibleState = <TicketDetail
-                            ticket = {this.state.selectedTicket}
-                            onClickingDelete = {this.handleDeletingTicket}
+            currentlyVisibleState = <EditCoffeeForm 
+                            coffee = {this.state.selectedCoffee}
+                            onEditCoffee = {this.handleEditingCoffeeInList} />;
+            buttonText = "Return to Coffee List"
+        } else if (this.state.selectedCoffee != null) {
+            currentlyVisibleState = <CoffeeDetail
+                            coffee = {this.state.selectedCoffee}
+                            onClickingDelete = {this.handleDeletingCoffee}
                             onClickingEdit = {this.handleEditClick}
                             onClickingUpdateQty = {this.handleUpdateQty} />;
-            buttonText = "Return to Ticket List";
+            buttonText = "Return to Coffee List";
         } else if (this.state.formVisibleOnPage) {
-            currentlyVisibleState = <NewTicketForm 
-                            onNewTicketCreation={this.handleAddingNewTicketToList}/>;
-            buttonText = "Return to Ticket List";
+            currentlyVisibleState = <NewCoffeeForm 
+                            onNewCoffeeCreation={this.handleAddingNewCoffeeToList}/>;
+            buttonText = "Return to Coffee List";
         } else {
-            currentlyVisibleState = <TicketList 
-                            ticketList={this.state.mainTicketList}
-                            onTicketSelection={this.handleChangingSelectedTicket} />
-            buttonText = "Add Ticket";        
+            currentlyVisibleState = <CoffeeList 
+                            coffeeList={this.state.mainCoffeeList}
+                            onCoffeeSelection={this.handleChangingSelectedCoffee} />
+            buttonText = "Add Coffee";        
         }
         
         return(
@@ -117,4 +117,4 @@ class TicketControl extends React.Component {
 
 
 
-export default TicketControl;
+export default CoffeeControl;
